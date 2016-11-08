@@ -69,20 +69,23 @@ def show_endpoints(datanum):
     return None
 
 
-class ServicesTable(tables.DataTable):
-    id = tables.Column('id', hidden=True)
+class ProcessListTable(tables.DataTable):
+    offset = tables.Column('offset', hidden=True)
     name = tables.Column("name", verbose_name=_('Name'))
-    service_type = tables.Column('type', verbose_name=_('Service'))
-    region = tables.Column('region', verbose_name=_('Region'))
-    endpoints = tables.Column(show_endpoints, verbose_name=_('Endpoints'))
+    pid = tables.Column('pid', verbose_name=_('Process ID'))
+    uid = tables.Column('uid', verbose_name=_('User ID'))
+    gid = tables.Column('gid', verbose_name=_('Group ID'))
+    dtb = tables.Column('dtb', verbose_name=_('DTB'))
+    start_time = tables.Column('start_time', verbose_name=_('Start Time'))
+    #endpoints = tables.Column(show_endpoints, verbose_name=_('Endpoints'))
 
     def get_object_id(self, datum):
         # this method is need b/c the parent impl does not handle dicts
         return datum.get('id')
 
     class Meta(object):
-        name = "services"
-        verbose_name = _("Services")
+        name = "plist"
+        verbose_name = _("Process List")
         table_actions = (ServiceFilterAction,)
         multi_select = False
 

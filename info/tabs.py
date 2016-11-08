@@ -25,10 +25,10 @@ from openstack_dashboard.dashboards.monitor.info import constants
 from openstack_dashboard.dashboards.monitor.info import tables
 
 
-class ServicesTab(tabs.TableTab):
-    table_classes = (tables.ServicesTable,)
-    name = tables.ServicesTable.Meta.verbose_name
-    slug = tables.ServicesTable.Meta.name
+class ProcessListTab(tabs.TableTab):
+    table_classes = (tables.ProcessListTable,)
+    name = tables.ProcessListTable.Meta.verbose_name
+    slug = tables.ProcessListTable.Meta.name
     template_name = constants.INFO_DETAIL_TEMPLATE_NAME
 
     def generate_catalog_endpoints(self, catalog):
@@ -41,14 +41,16 @@ class ServicesTab(tabs.TableTab):
                              if endpoint['region'] == region]
                 # sort the endpoints, so they appear in consistent order
                 endpoints.sort(key=lambda endpoint: endpoint.get('interface'))
-                yield {'id': service['name'] + region,
+                yield {'offset': service['name'] + region,
                        'name': service['name'],
-                       'type': service['type'],
-                       'region': region,
-                       'endpoints': endpoints,
+                       'pid': service['type'],
+                       'uid': region,
+                       'gid': endpoints,
+                       'dtb':'',
+                       'start_time':'',
                        }
 
-    def get_services_data(self):
+    def get_plist_data(self):
         request = self.tab_group.request
         catalog = request.user.service_catalog
         services = list(self.generate_catalog_endpoints(catalog))
@@ -144,6 +146,6 @@ class HeatServiceTab(tabs.TableTab):
 
 class SystemInfoTabs(tabs.TabGroup):
     slug = "system_info"
-    tabs = (ServicesTab, NovaServicesTab, CinderServicesTab,
+    tabs = (ProcessListTab, NovaServicesTab, CinderServicesTab,
             NetworkAgentsTab, HeatServiceTab)
     sticky = True
