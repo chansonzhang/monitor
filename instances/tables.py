@@ -207,13 +207,13 @@ class CreateCSVUsageReport(tables.LinkAction):
     icon = "download"
 
 class ProcessListTable(tables.DataTable):
-    project = tables.Column('offset', verbose_name=_('Offset'))
-    service = tables.Column('name', verbose_name=_('Name'))
-    meter = tables.Column('pid', verbose_name=_('Pid'))
-    description = tables.Column('uid', verbose_name=_('Uid'))
-    description = tables.Column('gid', verbose_name=_('Gid'))
-    description = tables.Column('dtb', verbose_name=_('DTB'))
-    description = tables.Column('start_time', verbose_name=_('Start Time'))
+    offset = tables.Column('offset', verbose_name=_('Offset'))
+    name = tables.Column('name', verbose_name=_('Name'))
+    pid = tables.Column('pid', verbose_name=_('Pid'))
+    uid = tables.Column('uid', verbose_name=_('Uid'))
+    gid = tables.Column('gid', verbose_name=_('Gid'))
+    dtb = tables.Column('dtb', verbose_name=_('DTB'))
+    start_time = tables.Column('start_time', verbose_name=_('Start Time'))
 
     def get_object_id(self, obj):
         return "%s-%s-%s" % (obj['project'], obj['service'], obj['meter'])
