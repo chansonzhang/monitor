@@ -182,5 +182,5 @@ class ProcessListTab(tabs.TableTab):
 
 class InstanceDetailTabs(tabs.TabGroup):
     slug = "instance_details"
-    tabs = (OverviewTab, LogTab, ConsoleTab, AuditTab,ProcessListTab)
+    tabs = (OverviewTab, LogTab, ConsoleTab, AuditTab, ProcessListTab)
     sticky = True

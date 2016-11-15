@@ -219,7 +219,7 @@ class ProcessListTable(tables.DataTable):
         return "%s-%s-%s" % (obj['project'], obj['service'], obj['meter'])
 
     class Meta(object):
-        name = 'report_table'
+        name = 'process_list_table'
         verbose_name = _("Daily Usage Report")
         table_actions = (ModifyUsageReportParameters, CreateCSVUsageReport)
         multi_select = False
