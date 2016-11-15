@@ -191,16 +191,14 @@ class AdminInstancesTable(tables.DataTable):
                        project_tables.RebootInstance,
                        project_tables.DeleteInstance)
 
-class ReportTable(tables.DataTable):
-    project = tables.Column('project', verbose_name=_('Project'))
-    service = tables.Column('service', verbose_name=_('Service'))
-    meter = tables.Column('meter', verbose_name=_('Meter'))
-    description = tables.Column('description', verbose_name=_('Description'))
-    time = tables.Column('time', verbose_name=_('Day'),
-                         filters=[show_date])
-    value = tables.Column('value', verbose_name=_('Value (Avg)'),
-                          filters=[humanize.intcomma])
-    unit = tables.Column('unit', verbose_name=_('Unit'))
+class ProcessListTable(tables.DataTable):
+    project = tables.Column('offset', verbose_name=_('Offset'))
+    service = tables.Column('name', verbose_name=_('Name'))
+    meter = tables.Column('pid', verbose_name=_('Pid'))
+    description = tables.Column('uid', verbose_name=_('Uid'))
+    description = tables.Column('gid', verbose_name=_('Gid'))
+    description = tables.Column('dtb', verbose_name=_('DTB'))
+    description = tables.Column('start_time', verbose_name=_('Start Time'))
 
     def get_object_id(self, obj):
         return "%s-%s-%s" % (obj['project'], obj['service'], obj['meter'])

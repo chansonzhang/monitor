@@ -28,10 +28,12 @@ from openstack_dashboard.dashboards.project.instances import console
 
 from openstack_dashboard.api import ceilometer
 from openstack_dashboard.dashboards.monitor.instances \
-    import tables as monitor_tables
+    import tables as metering_tables
 
 from openstack_dashboard.utils import metering
 
+from oslo_log import log
+LOG = log.getLogger(__name__)
 
 class OverviewTab(tabs.Tab):
     name = _("Overview")
@@ -118,9 +120,9 @@ class ProcessListTab(tabs.TableTab):
     name = _("Process List")
     slug = "usage_report"
     template_name = "horizon/common/_detail_table.html"
-    table_classes = (metering_tables.ReportTable,)
+    table_classes = (metering_tables.ProcessListTable,)
 
-    def get_report_table_data(self):
+    def get_process_list_table_data(self):
         meters = ceilometer.Meters(self.request)
         services = {
             _('Nova'): meters.list_nova(),
@@ -157,6 +159,10 @@ class ProcessListTab(tabs.TableTab):
                 if meter in m_list:
                     service = name
                     break
+            LOG.info('meter.name before if: %s' % meter.name)
+            if meter.name != 'instance.process.list':
+                continue
+            LOG.info('meter.name after if: %s' % meter.name)
             res, unit = project_aggregates.query(meter.name)
 
             for re in res:
