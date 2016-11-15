@@ -156,13 +156,14 @@ class ProcessListTab(tabs.TableTab):
         for meter in meters._cached_meters.values():
             service = None
             for name, m_list in services.items():
+                LOG.debug('m_list: %s' % m_list)
                 if meter in m_list:
                     service = name
                     break
-            LOG.info('meter.name before if: %s' % meter.name)
+            LOG.debug('meter.name before if: %s' % meter.name)
             if meter.name != 'instance.process.list':
                 continue
-            LOG.info('meter.name after if: %s' % meter.name)
+            LOG.debug('meter.name after if: %s' % meter.name)
             res, unit = project_aggregates.query(meter.name)
 
             for re in res:
