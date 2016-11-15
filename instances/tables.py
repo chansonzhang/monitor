@@ -194,7 +194,7 @@ class AdminInstancesTable(tables.DataTable):
 class ModifyUsageReportParameters(tables.LinkAction):
     name = "create"
     verbose_name = _("Modify Usage Report Parameters")
-    url = "horizon:admin:metering:create"
+    url = "horizon:monitor:instances:create"
     classes = ("ajax-modal",)
     icon = "edit"
 
@@ -202,7 +202,7 @@ class ModifyUsageReportParameters(tables.LinkAction):
 class CreateCSVUsageReport(tables.LinkAction):
     name = "csv"
     verbose_name = _("Download CSV Summary")
-    url = "horizon:admin:metering:csvreport"
+    url = "horizon:monitor:instances:csvreport"
     classes = ("btn-create",)
     icon = "download"
 
