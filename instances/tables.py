@@ -191,3 +191,37 @@ class AdminInstancesTable(tables.DataTable):
                        project_tables.RebootInstance,
                        project_tables.DeleteInstance)
 
+class ReportTable(tables.DataTable):
+    project = tables.Column('project', verbose_name=_('Project'))
+    service = tables.Column('service', verbose_name=_('Service'))
+    meter = tables.Column('meter', verbose_name=_('Meter'))
+    description = tables.Column('description', verbose_name=_('Description'))
+    time = tables.Column('time', verbose_name=_('Day'),
+                         filters=[show_date])
+    value = tables.Column('value', verbose_name=_('Value (Avg)'),
+                          filters=[humanize.intcomma])
+    unit = tables.Column('unit', verbose_name=_('Unit'))
+
+    def get_object_id(self, obj):
+        return "%s-%s-%s" % (obj['project'], obj['service'], obj['meter'])
+
+    class Meta(object):
+        name = 'report_table'
+        verbose_name = _("Daily Usage Report")
+        table_actions = (ModifyUsageReportParameters, CreateCSVUsageReport)
+        multi_select = False
+
+class ModifyUsageReportParameters(tables.LinkAction):
+    name = "create"
+    verbose_name = _("Modify Usage Report Parameters")
+    url = "horizon:admin:metering:create"
+    classes = ("ajax-modal",)
+    icon = "edit"
+
+
+class CreateCSVUsageReport(tables.LinkAction):
+    name = "csv"
+    verbose_name = _("Download CSV Summary")
+    url = "horizon:admin:metering:csvreport"
+    classes = ("btn-create",)
+    icon = "download"

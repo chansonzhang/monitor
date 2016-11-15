@@ -27,8 +27,8 @@ from openstack_dashboard import api
 from openstack_dashboard.dashboards.project.instances import console
 
 from openstack_dashboard.api import ceilometer
-from openstack_dashboard.dashboards.admin.metering \
-    import tables as metering_tables
+from openstack_dashboard.dashboards.monitor.instances \
+    import tables as monitor_tables
 
 from openstack_dashboard.utils import metering
 
