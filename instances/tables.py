@@ -191,6 +191,21 @@ class AdminInstancesTable(tables.DataTable):
                        project_tables.RebootInstance,
                        project_tables.DeleteInstance)
 
+class ModifyUsageReportParameters(tables.LinkAction):
+    name = "create"
+    verbose_name = _("Modify Usage Report Parameters")
+    url = "horizon:admin:metering:create"
+    classes = ("ajax-modal",)
+    icon = "edit"
+
+
+class CreateCSVUsageReport(tables.LinkAction):
+    name = "csv"
+    verbose_name = _("Download CSV Summary")
+    url = "horizon:admin:metering:csvreport"
+    classes = ("btn-create",)
+    icon = "download"
+
 class ProcessListTable(tables.DataTable):
     project = tables.Column('offset', verbose_name=_('Offset'))
     service = tables.Column('name', verbose_name=_('Name'))
@@ -209,17 +224,3 @@ class ProcessListTable(tables.DataTable):
         table_actions = (ModifyUsageReportParameters, CreateCSVUsageReport)
         multi_select = False
 
-class ModifyUsageReportParameters(tables.LinkAction):
-    name = "create"
-    verbose_name = _("Modify Usage Report Parameters")
-    url = "horizon:admin:metering:create"
-    classes = ("ajax-modal",)
-    icon = "edit"
-
-
-class CreateCSVUsageReport(tables.LinkAction):
-    name = "csv"
-    verbose_name = _("Download CSV Summary")
-    url = "horizon:admin:metering:csvreport"
-    classes = ("btn-create",)
-    icon = "download"
