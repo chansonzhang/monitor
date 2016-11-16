@@ -153,29 +153,24 @@ class ProcessListTab(tabs.TableTab):
         except Exception:
             exceptions.handle(self.request,
                               _('Unable to retrieve project list.'))
-        for meter in meters._cached_meters.values():
-            service = None
-            for name, m_list in services.items():
-                LOG.debug('m_list: %s' % m_list)
-                if meter in m_list:
-                    service = name
-                    break
-            res, unit = project_aggregates.query(meter.name)
 
-            for re in res:
-                values = re.get_meter('instance.process.list'.replace(".", "_"))
-                LOG.debug('values: %s'% values)
-                if values:
-                    for value in values:
-                        row = {"offset": 'none',
-                               "name": re.id,
-                               "pid": meter.name,
-                               "uid": meter.description,
-                               "gid": service,
-                               "dtb": value._apiresource.period_end,
-                               "start_time": value._apiresource.avg,
-                               }
-                        report_rows.append(row)
+        meter_name = 'instance.process.list'
+        meter = meters._cached_meters.get(meter_name, None)
+        res, unit = project_aggregates.query(meter.name)
+        for re in res:
+            values = re.get_meter('instance.process.list'.replace(".", "_"))
+            LOG.debug('values: %s'% values)
+            if values:
+                for value in values:
+                    row = {"offset": 'none',
+                            "name": re.id,
+                            "pid": meter.name,
+                            "uid": meter.description,
+                            "gid": service,
+                            "dtb": value._apiresource.period_end,
+                            "start_time": value._apiresource.avg,
+                           }
+                    report_rows.append(row)
         return report_rows
 
 class InstanceDetailTabs(tabs.TabGroup):
