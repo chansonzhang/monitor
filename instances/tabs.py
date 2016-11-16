@@ -132,7 +132,6 @@ class ProcessListTab(tabs.TableTab):
             _('Swift_meters'): meters.list_swift(),
             _('Kwapi'): meters.list_kwapi(),
             _('IPMI'): meters.list_ipmi(),
-            meters.
         }
         report_rows = []
 
