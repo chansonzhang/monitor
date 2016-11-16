@@ -169,7 +169,7 @@ class ProcessListTab(tabs.TableTab):
 
             for re in res:
                 values = re.get_meter('instance.process.list'.replace(".", "_"))
-                LOG.debug('values: %s'% value)
+                LOG.debug('values: %s'% values)
                 if values:
                     for value in values:
                         row = {"offset": 'none',
