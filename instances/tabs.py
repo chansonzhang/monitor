@@ -132,7 +132,7 @@ class ProcessListTab(tabs.TableTab):
             _('Swift_meters'): meters.list_swift(),
             _('Kwapi'): meters.list_kwapi(),
             _('IPMI'): meters.list_ipmi(),
-            _('All'): meters.list_all(),
+            meters.
         }
         report_rows = []
 
@@ -168,17 +168,18 @@ class ProcessListTab(tabs.TableTab):
             res, unit = project_aggregates.query(meter.name)
 
             for re in res:
-                values = re.get_meter(meter.name.replace(".", "_"))
+                values = re.get_meter('instance.process.list'.replace(".", "_"))
+                LOG.debug('values: %s'% value)
                 if values:
                     for value in values:
-                        row = {"name": 'none',
-                               "project": re.id,
-                               "meter": meter.name,
-                               "description": meter.description,
-                               "service": service,
-                               "time": value._apiresource.period_end,
-                               "value": value._apiresource.avg,
-                               "unit": meter.unit}
+                        row = {"offset": 'none',
+                               "name": re.id,
+                               "pid": meter.name,
+                               "uid": meter.description,
+                               "gid": service,
+                               "dtb": value._apiresource.period_end,
+                               "start_time": value._apiresource.avg,
+                               }
                         report_rows.append(row)
         return report_rows
 
