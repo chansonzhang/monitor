@@ -155,6 +155,7 @@ class ProcessListTab(tabs.TableTab):
                               _('Unable to retrieve project list.'))
 
         meter_name = 'instance.process.list'
+        LOG.debug("cached_meters: %s" % meters._cached_meters)
         meter = meters._cached_meters.get(meter_name, None)
         res, unit = project_aggregates.query(meter.name)
         for re in res:
