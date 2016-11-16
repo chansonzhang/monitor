@@ -160,10 +160,6 @@ class ProcessListTab(tabs.TableTab):
                 if meter in m_list:
                     service = name
                     break
-            LOG.debug('meter.name before if: %s' % meter.name)
-            if meter.name != 'instance.process.list':
-                continue
-            LOG.debug('meter.name after if: %s' % meter.name)
             res, unit = project_aggregates.query(meter.name)
 
             for re in res:
