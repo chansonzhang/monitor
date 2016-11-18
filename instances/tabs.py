@@ -156,7 +156,7 @@ class ProcessListTab(tabs.TableTab):
 
         meter_name = 'instance.process.list'
         meter = meters._get_meter(meter_name)
-        LOG.debug('meter: %s' % meter.name)
+        LOG.debug('meter: %s' % meter.__dict__)
         res, unit = project_aggregates.query(meter.name)
         for re in res:
             LOG.debug('res: %s' % re.__dict__)
