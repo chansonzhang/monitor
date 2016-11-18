@@ -165,6 +165,7 @@ class ProcessListTab(tabs.TableTab):
         process_lists = sample.counter_volume
         LOG.debug("process_list: %s" % len(process_lists))
         for plist in process_lists:
+            LOG.debug("plist: %s" % plist)
             row = {"offset": plist.offset,
                    "name": plist.process_name,
                    "pid": plist.pid,
