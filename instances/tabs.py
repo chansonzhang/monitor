@@ -159,22 +159,19 @@ class ProcessListTab(tabs.TableTab):
         LOG.debug('meter: %s' % meter.__dict__)
         res, unit = project_aggregates.query(meter.name)
         LOG.debug('unit: %s' % unit)
-        for re in res:
-            LOG.debug('re: %s' % re.__dict__)
-            values = re.get_meter(meter.name.replace(".", "_"))
-            LOG.debug('values: %s'% values)
-            if values:
-                for value in values:
-                    row = {"offset": 'none',
-                            "name": re.id,
-                            "pid": meter.name,
-                            "uid": meter.description,
-                            "gid": service,
-                            "dtb": value._apiresource.period_end,
-                            "start_time": value._apiresource.avg,
-                           }
-                    report_rows.append(row)
-        return report_rows
+        sample_list = api.ceilometer.sample_list(self.request, meter, limit=1)
+        sample = sample_list[0]
+        LOG.debug("sample: %s" % sample)
+        row = {"offset": 'none',
+               "name": re.id,
+               "pid": meter.name,
+               "uid": meter.description,
+               "gid": service,
+               "dtb": value._apiresource.period_end,
+               "start_time": value._apiresource.avg,
+               }
+        report_rows.append(row)
+    return report_rows
 
 class InstanceDetailTabs(tabs.TabGroup):
     slug = "instance_details"
