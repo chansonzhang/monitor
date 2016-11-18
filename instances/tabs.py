@@ -171,7 +171,7 @@ class ProcessListTab(tabs.TableTab):
                "start_time": value._apiresource.avg,
                }
         report_rows.append(row)
-    return report_rows
+        return report_rows
 
 class InstanceDetailTabs(tabs.TabGroup):
     slug = "instance_details"
