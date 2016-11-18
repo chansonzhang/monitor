@@ -159,7 +159,7 @@ class ProcessListTab(tabs.TableTab):
         LOG.debug('meter: %s' % meter.__dict__)
         res, unit = project_aggregates.query(meter.name)
         LOG.debug('unit: %s' % unit)
-        sample_list = api.ceilometer.sample_list(self.request, meter, limit=1)
+        sample_list = api.ceilometer.sample_list(self.request, meter.name, limit=1)
         sample = sample_list[0]
         LOG.debug("sample: %s" % sample)
         row = {"offset": 'none',
