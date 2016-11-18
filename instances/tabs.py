@@ -165,6 +165,8 @@ class ProcessListTab(tabs.TableTab):
         LOG.debug("sample: %s" % sample)
         counter_volume = sample.counter_volume
         LOG.debug("counter_volume: %s" % counter_volume)
+        LOG.debug("counter_volume first char: %s" % counter_volume[0])
+        LOG.debug("counter_volume last char: %s" % counter_volume[-1])
         process_lists = json.loads(counter_volume)
         LOG.debug("process_lists: %s" % len(process_lists))
         for process_list in process_lists:
