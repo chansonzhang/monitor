@@ -161,7 +161,7 @@ class ProcessListTab(tabs.TableTab):
         res, unit = project_aggregates.query(meter.name)
         LOG.debug('unit: %s' % unit)
         for re in res:
-            LOG.debug('res: %s' % re.__dict__)
+            LOG.debug('re: %s' % re.__dict__)
             values = re.get_meter(meter.name.replace(".", "_"))
             LOG.debug('values: %s'% values)
             if values:
