@@ -157,12 +157,11 @@ class ProcessListTab(tabs.TableTab):
         meter_name = 'instance.process.list'
         meter = meters._get_meter(meter_name)
         LOG.debug('meter: %s' % meter.__dict__)
-        LOG.debug('project_aggregates: %s' % project_aggregates.__dict__)
         res, unit = project_aggregates.query(meter.name)
         LOG.debug('unit: %s' % unit)
         for re in res:
             LOG.debug('re: %s' % re.__dict__)
-            values = re.get_meter(meter.name)
+            values = re.get_meter(meter.name.replace(".", "_"))
             LOG.debug('values: %s'% values)
             if values:
                 for value in values:
