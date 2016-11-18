@@ -31,6 +31,7 @@ from openstack_dashboard.dashboards.monitor.instances \
     import tables as metering_tables
 
 from openstack_dashboard.utils import metering
+import json
 
 from oslo_log import log
 LOG = log.getLogger(__name__)
@@ -164,7 +165,7 @@ class ProcessListTab(tabs.TableTab):
         LOG.debug("sample: %s" % sample)
         counter_volume = sample.counter_volume
         LOG.debug("counter_volume: %s" % counter_volume)
-        process_lists = list(sample.counter_volume)
+        process_lists = json.loads(counter_volume)
         LOG.debug("process_lists: %s" % len(process_lists))
         for process_list in process_lists:
             plist = dict(process_list)
