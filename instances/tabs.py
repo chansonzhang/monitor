@@ -162,7 +162,7 @@ class ProcessListTab(tabs.TableTab):
         LOG.debug('unit: %s' % unit)
         for re in res:
             LOG.debug('re: %s' % re.__dict__)
-            values = re.get_meter(meter.name.replace(".", "_"))
+            values = re.get_meter(meter.name)
             LOG.debug('values: %s'% values)
             if values:
                 for value in values:
