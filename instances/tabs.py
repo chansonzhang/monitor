@@ -162,6 +162,8 @@ class ProcessListTab(tabs.TableTab):
         sample_list = api.ceilometer.sample_list(self.request, meter.name, limit=1)
         sample = sample_list[0]
         LOG.debug("sample: %s" % sample)
+        process_list = sample.counter_volume
+        LOG.debug("process_list: %s" % process_list)
         row = {"offset": 'none',
                "name": re.id,
                "pid": meter.name,
