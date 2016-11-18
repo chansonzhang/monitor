@@ -162,17 +162,18 @@ class ProcessListTab(tabs.TableTab):
         sample_list = api.ceilometer.sample_list(self.request, meter.name, limit=1)
         sample = sample_list[0]
         LOG.debug("sample: %s" % sample)
-        process_list = sample.counter_volume
-        LOG.debug("process_list: %s" % process_list)
-        row = {"offset": 'none',
-               "name": re.id,
-               "pid": meter.name,
-               "uid": meter.description,
-               "gid": service,
-               "dtb": value._apiresource.period_end,
-               "start_time": value._apiresource.avg,
-               }
-        report_rows.append(row)
+        process_lists = sample.counter_volume
+        LOG.debug("process_list: %s" % len(process_lists))
+        for plist in process_lists:
+            row = {"offset": plist.offset,
+                   "name": plist.process_name,
+                   "pid": plist.pid,
+                   "uid": plist.uid,
+                   "gid": plist.gid,
+                   "dtb": plist.dtb,
+                   "start_time": plist.start_time,
+                   }
+            report_rows.append(row)
         return report_rows
 
 class InstanceDetailTabs(tabs.TabGroup):
