@@ -162,7 +162,7 @@ class ProcessListTab(tabs.TableTab):
         sample_list = api.ceilometer.sample_list(self.request, meter.name, limit=1)
         sample = sample_list[0]
         LOG.debug("sample: %s" % sample)
-        process_lists = [sample.counter_volume]
+        process_lists = list(sample.counter_volume)
         LOG.debug("process_lists: %s" % len(process_lists))
         for process_list in process_lists:
             plist = dict(process_list)
