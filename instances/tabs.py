@@ -172,13 +172,13 @@ class ProcessListTab(tabs.TableTab):
         for process_list in process_lists:
             plist = dict(process_list)
             LOG.debug("plist: %s" % plist)
-            row = {"offset": plist.offset,
-                   "name": plist.process_name,
-                   "pid": plist.pid,
-                   "uid": plist.uid,
-                   "gid": plist.gid,
-                   "dtb": plist.dtb,
-                   "start_time": plist.start_time,
+            row = {"offset": plist['offset'],
+                   "name": plist['process_name'],
+                   "pid": plist['pid'],
+                   "uid": plist['uid'],
+                   "gid": plist['gid'],
+                   "dtb": plist['dtb'],
+                   "start_time": plist['start_time'],
                    }
             report_rows.append(row)
         return report_rows
