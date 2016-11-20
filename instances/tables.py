@@ -216,7 +216,7 @@ class ProcessListTable(tables.DataTable):
     start_time = tables.Column('start_time', verbose_name=_('Start Time'))
 
     def get_object_id(self, obj):
-        return "%s-%s-%s" % (obj['project'], obj['service'], obj['meter'])
+        return "%s-%s-%s" % (obj['name'], obj['pid'], obj['uid'])
 
     class Meta(object):
         name = 'process_list_table'
