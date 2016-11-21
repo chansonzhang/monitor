@@ -193,7 +193,7 @@ class ProcessListTab(tabs.TableTab):
 
     def get_sample_info_table_data(self):
         report_rows = []
-        row = {"instance": self.tab_group.kwargs['instance'],
+        row = {"instance": self.tab_group.kwargs['instance'].name,
                "meter": "instance.process.list",
                "description": self._meter.description,
                "timestamp": self._timestamp,
