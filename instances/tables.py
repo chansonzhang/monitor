@@ -224,3 +224,18 @@ class ProcessListTable(tables.DataTable):
         table_actions = (ModifyUsageReportParameters, CreateCSVUsageReport)
         multi_select = False
 
+class SampleInfoTable(tables.DataTable):
+    project = tables.Column('project', verbose_name=_('Project'))
+    service = tables.Column('service', verbose_name=_('Service'))
+    meter = tables.Column('meter', verbose_name=_('Meter'))
+    description = tables.Column('description', verbose_name=_('Description'))
+    timestamp = tables.Column('timestamp', verbose_name=_('Timestamp'))
+
+    def get_object_id(self, obj):
+        return "%s-%s-%s" % (obj['project'], obj['service'], obj['meter'])
+
+    class Meta(object):
+        name = 'sample_info_table'
+        verbose_name = _("Sample Info")
+        multi_select = False
+
