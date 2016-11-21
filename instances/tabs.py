@@ -120,7 +120,7 @@ class AuditTab(tabs.TableTab):
 class ProcessListTab(tabs.TableTab):
     name = _("Process List")
     slug = "usage_report"
-    template_name = "horizon/common/_detail_table.html"
+    template_name = "monitor/instances/_detail_table.html"
     table_classes = (metering_tables.ProcessListTable, metering_tables.SampleInfoTable,)
 
     def get_process_list_table_data(self):
