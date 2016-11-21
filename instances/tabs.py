@@ -169,6 +169,7 @@ class ProcessListTab(tabs.TableTab):
                  ]
         sample_list = api.ceilometer.sample_list(self.request, meter.name, query, limit=1)
         sample = sample_list[0]
+        self._timestamp = sample.timestamp
         LOG.debug("sample: %s" % sample)
         counter_volume = sample.counter_volume
         LOG.debug("counter_volume: %s" % counter_volume)
@@ -193,9 +194,9 @@ class ProcessListTab(tabs.TableTab):
     def get_sample_info_table_data(self):
         report_rows = []
         row = {"instance": self.tab_group.kwargs['instance'],
-               "meter":"instance.process.list",
+               "meter": "instance.process.list",
                "description": self._meter.description,
-               "timestamp": self._meter.timestamp,
+               "timestamp": self._timestamp,
                }
         report_rows.append(row)
         return report_rows
