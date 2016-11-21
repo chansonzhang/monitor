@@ -158,6 +158,7 @@ class ProcessListTab(tabs.TableTab):
 
         meter_name = 'instance.process.list'
         meter = meters._get_meter(meter_name)
+        self._meter = meter
         LOG.debug('meter: %s' % meter.__dict__)
         res, unit = project_aggregates.query(meter.name)
         LOG.debug('unit: %s' % unit)
@@ -190,67 +191,13 @@ class ProcessListTab(tabs.TableTab):
         return report_rows
 
     def get_sample_info_table_data(self):
-        meters = ceilometer.Meters(self.request)
-        instance = self.tab_group.kwargs['instance']
-        services = {
-            _('Nova'): meters.list_nova(),
-            _('Neutron'): meters.list_neutron(),
-            _('Glance'): meters.list_glance(),
-            _('Cinder'): meters.list_cinder(),
-            _('Swift_meters'): meters.list_swift(),
-            _('Kwapi'): meters.list_kwapi(),
-            _('IPMI'): meters.list_ipmi(),
-        }
         report_rows = []
-
-        date_options = self.request.session.get('period', 1)
-        date_from = self.request.session.get('date_from', '')
-        date_to = self.request.session.get('date_to', '')
-
-        try:
-            date_from, date_to = metering.calc_date_args(date_from,
-                                                         date_to,
-                                                         date_options)
-        except Exception:
-            exceptions.handle(self.request, _('Dates cannot be recognized.'))
-        try:
-            project_aggregates = metering.ProjectAggregatesQuery(self.request,
-                                                                 date_from,
-                                                                 date_to,
-                                                                 3600 * 24)
-        except Exception:
-            exceptions.handle(self.request,
-                              _('Unable to retrieve project list.'))
-
-        meter_name = 'instance.process.list'
-        meter = meters._get_meter(meter_name)
-        LOG.debug('meter: %s' % meter.__dict__)
-        res, unit = project_aggregates.query(meter.name)
-        LOG.debug('unit: %s' % unit)
-        query = [
-                 {"field": "resource_id",
-                  "op": "eq",
-                  "value": instance.id},
-                 ]
-        sample_list = api.ceilometer.sample_list(self.request, meter.name, query, limit=1)
-        sample = sample_list[0]
-        LOG.debug("sample: %s" % sample)
-        counter_volume = sample.counter_volume
-        LOG.debug("counter_volume: %s" % counter_volume)
-        LOG.debug("counter_volume first char: %s" % counter_volume[0])
-        LOG.debug("counter_volume last char: %s" % counter_volume[-1])
-        process_lists = eval(counter_volume)
-        LOG.debug("process_lists: %s" % len(process_lists))
-        for process_list in process_lists:
-            plist = dict(process_list)
-            LOG.debug("plist: %s" % plist)
-            row = {"project": plist['offset'],
-                   "service": plist['process_name'],
-                   "meter": plist['pid'],
-                   "description": plist['uid'],
-                   "timestamp": plist['gid'],
-                   }
-            report_rows.append(row)
+        row = {"instance": self.tab_group.kwargs['instance'],
+               "meter":"instance.process.list",
+               "description": self._meter.description,
+               "timestamp": self._meter.timestamp,
+               }
+        report_rows.append(row)
         return report_rows
 
 class InstanceDetailTabs(tabs.TabGroup):
