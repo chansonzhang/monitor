@@ -125,6 +125,7 @@ class ProcessListTab(tabs.TableTab):
 
     def get_process_list_table_data(self):
         meters = ceilometer.Meters(self.request)
+        instance = self.tab_group.kwargs['instance']
         services = {
             _('Nova'): meters.list_nova(),
             _('Neutron'): meters.list_neutron(),
@@ -160,7 +161,12 @@ class ProcessListTab(tabs.TableTab):
         LOG.debug('meter: %s' % meter.__dict__)
         res, unit = project_aggregates.query(meter.name)
         LOG.debug('unit: %s' % unit)
-        sample_list = api.ceilometer.sample_list(self.request, meter.name, limit=1)
+        query = [
+                 {"field": "resource_id",
+                  "op": "eq",
+                  "value": instance.id},
+                 ]
+        sample_list = api.ceilometer.sample_list(self.request, meter.name, query, limit=1)
         sample = sample_list[0]
         LOG.debug("sample: %s" % sample)
         counter_volume = sample.counter_volume
